@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Second_Swap.Models.Product>
+
+@{
+
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- page css -->
+<link href="~/admin/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+
+<div class="header-sub-title">
+    <nav class="breadcrumb breadcrumb-dash">
+        <a class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        <span class="breadcrumb-item active">Product</span>
+    </nav>
+</div>
+
+@* <a class="btn btn-outline-info btn-sm add" asp-area="Admin" asp-controller="Category" asp-action="Create" title="Create" style="margin-bottom: 20px">
+    New Role <i class="bx bx-list-plus"></i>
+</a> *@
+<div class="card">
+    <div class="card-body">
+        <table id="data-table" class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Create Day</th>
+                    <th>Censorship</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@category.Title</td>
+                        <td style="width:300px">@category.Description</td>
+                        <td>
+                            @category.Price
+                        </td>
+                        <td>
+                            @category.Category.Name
+                        </td>
+                        <td>
+                            @category.CreateDay
+                        </td>
+                        <td>
+                            @category.Censorship
+                        </td>
+
+                        <td>
+                            <a class="btn btn-outline-success btn-sm edit" asp-area="Admin" asp-action="Approved" asp-route-id="@category.Id" title="Edit">
+                                Approved <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm edit" asp-area="Admin" asp-action="Reject" asp-route-id="@category.Id" title="Edit">
+                                Reject <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+
+                }
+
+            </tbody>
+            <tfoot>
+
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Create Day</th>
+                    <th>Censorship</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+
+    <!-- page js -->
+    <script src="~/admin/assets/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/admin/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
+}

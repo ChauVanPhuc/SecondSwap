@@ -1,0 +1,82 @@
+﻿@model Second_Swap.ViewModels.ProfileDisplayModel
+
+
+<h3 class="mb20 user-title"> <strong>Manage History Order</strong> </h3>
+
+<div class="card">
+    <div class="card-body">
+        <table id="data-table" class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                   
+                   
+                    <th>Status</th>
+                    <th>Message</th>
+                    <th>Create Day</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.HistoryOrder)
+                {
+                    <tr>
+                        <td>@order.Product.Title</td>
+                        <td>
+                            @order.Status
+                        </td>
+                        <td>
+                            @order?.Message
+                        </td>
+                        <td>
+                            @order.CreateAt
+                        </td>
+                        <td>
+                            @if(order.Confirm == null){
+                                <a class="btn btn-outline-success btn-sm edit col-lg-12" asp-controller="Order" asp-action="Confirm" asp-route-id="@order.Id" title="Edit">
+                                    Confirm
+                                </a>
+                            }else{
+                                if (order.Feedbacks == null)
+                                {
+                                    <a class="btn btn-outline-success btn-sm edit col-lg-12" asp-controller="Feedback" asp-action="AddFeedback" asp-route-id="@order.Id" title="Edit">
+                                        Feedback
+                                    </a>
+                                }else{
+                                    <a class="btn btn-outline-success btn-sm edit col-lg-12" asp-controller="Order" asp-action="Detail" asp-route-id="@order.Id" title="Edit">
+                                        <i class="fas fa-bars"></i>
+                                    </a>
+                                }
+                                
+                            }
+                            
+                        </td>
+
+                    </tr>
+
+                }
+
+            </tbody>
+            <tfoot>
+
+               @*  <tr>
+                    <th>Product</th>
+                    <th>Buyer</th>
+
+                    <th>Method Payment</th>
+                    <th>Status</th>
+                    <th>Message</th>
+                    <th>Create Day</th>
+                    <th></th>
+                </tr>
+            </tfoot> *@
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+
+    <!-- page js -->
+    <script src="~/student/assets/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/student/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
+}

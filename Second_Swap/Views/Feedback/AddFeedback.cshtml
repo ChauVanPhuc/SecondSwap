@@ -1,0 +1,155 @@
+﻿@model Second_Swap.ViewModels.FeedbackViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<link href="~/asset/style_upload.css" rel="stylesheet" />
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .rate {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+    }
+
+        .rate:not(:checked) > input {
+            position: absolute;
+            top: -9999px;
+        }
+
+        .rate:not(:checked) > label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+            .rate:not(:checked) > label:before {
+                content: '★ ';
+            }
+
+        .rate > input:checked ~ label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+            color: #deb217;
+        }
+
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+            color: #c59b08;
+        }
+
+    
+</style>
+
+<div class="home__wrapperHome mt15">
+
+    <div class="ads-create-main-data" style="display: block;">
+
+        <form asp-controller="Feedback" asp-action="AddFeedback" asp-route-id="@ViewBag.OrderId" method="post" enctype="multipart/form-data">
+        <div class="row" style="margin-top: 0px; margin-bottom: 25px;">
+
+                <div class="ads-create-main-data-title">
+                    <div class="ads-create-main-data-box-item" style="margin-top: 0px; margin-bottom: 25px;">
+                        <p class="ads-create-subtitle">Rate</p>
+                        <div class="rate-container" style="display: flex; align-items: center;">
+                        <div class="rate">
+                            <span asp-validation-for="Quality" class="text-danger"></span>
+                            <input type="radio" id="star5" asp-for="Quality" value="5" />
+                            <label for="star5" title="text">5 stars</label>
+
+                            <input type="radio" id="star4" asp-for="Quality" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+
+                            <input type="radio" id="star3" asp-for="Quality" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+
+                            <input type="radio" id="star2" asp-for="Quality" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+
+                            <input type="radio" id="star1" asp-for="Quality" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                        </div>
+                        <div id="ratingMessage" style="margin-top: 10px; font-size: 18px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ads-create-main-data-box-item">
+                    <p class="ads-create-subtitle">Comment</p>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+
+                    <textarea asp-for="Comment" class="ads-create-textarea" rows="6" >
+                    </textarea>
+                </div>
+
+                <div class="ads-create-main-data-title">
+                    <div class="ads-create-main-data-box-item" style="margin-top: 0px; margin-bottom: 25px;">
+                        <p class="ads-create-subtitle">Video</p>
+                        <input type="file" class="form-control" asp-for="FileVideo" id="Video" accept="video/*" />
+
+                    </div>
+                </div>
+
+        </div>
+        <button class="ads-create-publish btn-color-blue" data-action="ad-create"> <span class="action-load-span-start"> <i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i> </span>Submit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var rateInputs = document.querySelectorAll('.rate input[type="radio"]');
+            var ratingMessage = document.getElementById('ratingMessage');
+
+            rateInputs.forEach(function (input) {
+                input.addEventListener('change', function () {
+                    switch (input.value) {
+                        case '5':
+                            ratingMessage.textContent = 'Excellent';
+                            ratingMessage.style.color = '#4CAF50'; 
+                            break;
+                        case '4':
+                            ratingMessage.textContent = 'Good';
+                            ratingMessage.style.color = '#8BC34A';
+                            break;
+                        case '3':
+                            ratingMessage.textContent = 'Normal';
+                            ratingMessage.style.color = '#FFC107';
+                            break;
+                        case '2':
+                            ratingMessage.textContent = 'Bad';
+                            ratingMessage.style.color = '#FF9800'; 
+                            break;
+                        case '1':
+                            ratingMessage.textContent = 'So Bad';
+                            ratingMessage.style.color = '#F44336'; 
+                            break;
+                        default:
+                            ratingMessage.textContent = '';
+                            break;
+                    }
+                });
+            });
+        });
+    </script>
+
+}
